@@ -68,7 +68,12 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'final.wsgi.application'
+STATIC_URL = '/static/'
 
+# If you are adding additional static directories
+STATICFILES_DIRS = [
+    BASE_DIR / "final/static",  # Adjust the path to match your directory structure
+]
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases

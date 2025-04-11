@@ -3,13 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SimpleSaral</title>
+    <title>SimpleSaral: Smart Document Navigator</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'icons/icon.png' %}" type="image/png"> <!-- Add page icon -->
+    <style>
+        /* Adding some smooth transitions to enhance the experience */
+        * {
+            transition: all 0.8s ease;
+        }
+        .step:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .header-content h1 {
+            animation: fadeIn 2s ease-in-out;
+        }
+        .scroll-down {
+            animation: bounce 1s infinite;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to SimpleSaral</h1>
-    <button onclick="window.location.href='{% url 'signup' %}'">Sign Up</button>
-    <button onclick="window.location.href='{% url 'login' %}'">Login</button>
-    <button>Contact Us</button>
-    <button>About Us</button>
+    <!-- Header Section -->
+    <header id="hero">
+        <a href="#introduction" class="logo-link"> <!-- Add logo hyperlink -->
+            <img src="static/icons/icon.png" alt="SimpleSaral Logo" class="logo"> <!-- Logo image -->
+        </a>
+        <div class="video-container">
+            <video autoplay muted loop playsinline>
+                <source src="static/icons/background.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="header-content">
+            <h1>SimpleSaral</h1>
+            <p class="tagline">Documenting Your Way to a Hassle-Free Future (No More Paper Jams!)</p>
+            <a href="#introduction" class="scroll-down">
+                <span class="arrow">↓</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Introduction Section -->
+    <section id="introduction">
+        <h2>Welcome to SimpleSaral!</h2>
+        <p>Fed up with the paperwork jungle? Say goodbye to missing documents and long office queues! SimpleSaral is your personal superhero in the digital age—saving you time, stress, and all that nasty paper. Just pick a scheme, and we’ll handle the rest. It’s like having a document-savvy sidekick, but without the cape.</p>
+        <button onclick="window.location.href='{% url 'signup' %}'">Sign Up</button>
+        <button onclick="window.location.href='{% url 'login' %}'">Login</button>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works">
+        <h2>How It Works (Spoiler: It's Super Easy!)</h2>
+        <div class="steps">
+            <div class="step">
+                <img src="static/icons/scheme.gif" alt="Pick a Scheme">
+                <p><strong>Pick a Scheme:</strong> Choose the government scheme that’s calling your name. Yes, we know, it’s hard to pick just one.</p>
+            </div>
+            <div class="step">
+                <img src="static/icons/list.gif" alt="Get the List">
+                <p><strong>Get the List:</strong> Boom! A neat, paper-free checklist of the exact documents you need—no guesswork!</p>
+            </div>
+            <div class="step">
+                <img src="static/icons/submit.gif" alt="Submit with Confidence">
+                <p><strong>Submit with Confidence:</strong> No more "Oops, forgot that one paper!" Just pure submission bliss.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+        <h2>Features That'll Make You Wonder How You Lived Without Us</h2>
+        <ul>
+            <li><strong>Smart Recommendations:</strong> Like a personal assistant, but with way less coffee.</li>
+            <li><strong>No More Paper Trails:</strong> We make the paperwork vanish, magic-style—minus the top hat.</li>
+            <li><strong>Time-Saving:</strong> Say goodbye to confusing government forms and hello to sanity-saving solutions!</li>
+        </ul>
+    </section>
+
+    <!-- Applications Section -->
+    <section id="applications">
+        <h2>Applications (Because We’re Everywhere!)</h2>
+        <div class="application-cards">
+            <div class="card">Government Schemes</div>
+            <div class="card">Education</div>
+            <div class="card">Jobs</div>
+            <div class="card">Banking</div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <nav>
+            <a href="#introduction">About Us</a>
+            <a href="#privacy-policy">Privacy Policy</a>
+            <a href="#contact">Contact</a>
+            <a href="#faq">FAQ</a>
+        </nav>
+        <p class="cta">Ready to break free from the paper trail? <a href="#how-it-works">Start Your Paperless Journey Now!</a></p>
+    </footer>
+    <script src="{% static 'js/func.js' %}"></script>
 </body>
 </html>

@@ -3,10 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signup</title>
+    <title>Sign Up</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+    <img src="{% static 'icons/signup_background.png' %}" alt="background image">
+    
+
 </head>
 <body>
-    <h1>Sign Up</h1>
+    <header>
+        <!-- <a href="#hero" class="logo-link">
+            <img src="{% static 'icons/icon.png' %}" alt="SimpleSaral Logo" class="logo">
+        </a> -->
+        <h1>Sign Up</h1>
+    </header>
 
     <!-- Display any error or success messages -->
     {% if messages %}
@@ -21,7 +31,32 @@
     <form method="POST">
         {% csrf_token %}
         
-        <!-- Render each field with error messages -->
+        <!-- Full Name -->
+        <div>
+            <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
+            {{ form.first_name }}
+            {% if form.first_name.errors %}
+                <ul>
+                    {% for error in form.first_name.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div>
+            <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
+            {{ form.last_name }}
+            {% if form.last_name.errors %}
+                <ul>
+                    {% for error in form.last_name.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <!-- Username -->
         <div>
             <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
             {{ form.username }}
@@ -34,6 +69,20 @@
             {% endif %}
         </div>
 
+        <!-- Email -->
+        <div>
+            <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+                <ul>
+                    {% for error in form.email.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <!-- Password -->
         <div>
             <label for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
             {{ form.password1 }}
@@ -46,6 +95,7 @@
             {% endif %}
         </div>
 
+        <!-- Confirm Password -->
         <div>
             <label for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
             {{ form.password2 }}
@@ -58,9 +108,27 @@
             {% endif %}
         </div>
 
+        <!-- Category -->
+        <div>
+            <label for="{{ form.category.id_for_label }}">{{ form.category.label }}</label>
+            {{ form.category }}
+            {% if form.category.errors %}
+                <ul>
+                    {% for error in form.category.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <!-- Submit Button -->
         <button type="submit">Sign Up</button>
     </form>
 
     <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+
+    <footer>
+        <p>By signing up, you agree to our <a href="#">Terms and Conditions</a>.</p>
+    </footer>
 </body>
 </html>

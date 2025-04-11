@@ -9,14 +9,29 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.http import JsonResponse
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.shortcuts import render
+from django.http import JsonResponse
+import json
+import requests
+class CustomUserCreationForm(UserCreationForm):
+    first_name = forms.CharField(max_length=100, required=True)
+    last_name = forms.CharField(max_length=100, required=True)
+    email = forms.EmailField(required=True)
+    category = forms.ChoiceField(choices=[('student', 'Student'), ('teacher', 'Teacher'), ('admin', 'Admin')], required=True)
 
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2', 'category']
+
+        
 CHATBOT_API_URL = "http://127.0.0.1:8001/chatbot/ask/"
 
 def chatbot_view(request):
     return render(request, 'scholarships/chatbot.html')
 
-import requests
-from django.http import JsonResponse
 
 CHATBOT_API_URL = "http://127.0.0.1:8001/chatbot/ask/"
 
@@ -53,6 +68,7 @@ def send_question_to_chatbot(request):
             return JsonResponse({'error': 'Invalid JSON data'}, status=400)
 
     return JsonResponse({'error': 'Invalid HTTP method'}, status=405)
+
 def home(request):
     return render(request, 'scholarships/home.html')
 

@@ -1,13 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>SimpleSaral Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <script>
+        // CSRF token setup for security in AJAX requests
+        const csrfToken = '{{ csrf_token }}';
+        // Toggle Chatbot visibility
+        function toggleChatbot() {
+            const chatbotWindow = document.getElementById("chatbotWindow");
+            if (chatbotWindow.style.display === "none" || chatbotWindow.style.display === "") {
+               chatbotWindow.style.display = "flex";  // Show the chatbot window
+               } else {
+                chatbotWindow.style.display = "none";  // Hide the chatbot window
+          }
+}
+
+        // Function to send question to the Django backend and get the response
+        function sendQuestion() {
+            const question = document.getElementById("questionInput").value;
+
+            // Send question to the Django endpoint
+            fetch('/chatbot/ask/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken  // Include CSRF token in the request headers
+                },
+                body: JSON.stringify({ question: question })  // Send the question
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const answer = data.answer || data.error;
+                    document.getElementById("chatbotResponse").innerText = answer;
+                })
+                .catch(error => {
+                    document.getElementById("chatbotResponse").innerText = "There was an error. Please try again.";
+                });
+        }
+    </script>
 </head>
+
 <body>
-    <h1>Welcome, {{ user.username }}!</h1>
-    <p>Click the button below to chat with the AI.</p>
-    <button onclick="window.location.href='/chatbot/'">Chat with AI</button>
+    <header>
+        <div class="logo">
+            <a href="/"><img src="{% static 'icons/icon.png' %}" alt="SimpleSaral Logo"></a>
+        </div>
+        <div class="user-info">
+            <p>Welcome, <strong>{{ user.username }}</strong></p>
+            <a href="/logout/">Logout</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Overview Section -->
+        <section id="overview">
+            <h2>Scholarship Overview</h2>
+            <div class="overview-stats">
+                <div class="stat-card">
+                    <h3>Total Scholarships</h3>
+                    <p>{{ total_scholarships }}</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Eligible Scholarships</h3>
+                    <p>{{ eligible_scholarships }}</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Pending Applications</h3>
+                    <p>{{ pending_applications }}</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chatbot Section -->
+        <section id="chatbot">
+            <h2>Ask a Question to the AI Chatbot</h2>
+            <!-- Chatbot Button -->
+            <div class="chatbot-button" onclick="toggleChatbot()">
+                <span>💬</span>
+            </div>
+
+            <!-- Chatbot Window -->
+            <div class="chatbot-window" id="chatbotWindow">
+                <div class="chatbot-header">
+                    <h4>Scholarship Helper</h4>
+                </div>
+                <div id="chatbot-body" class="chatbot-body">
+                    <!-- This is where the chat messages will appear dynamically -->
+                </div>
+                <div class="chatbot-footer">
+                    <input type="text" id="questionInput" class="chatbot-input" placeholder="Ask a question...">
+                    <button class="chatbot-send-btn" onclick="sendQuestion()">Send</button>
+                </div>
+            </div>
+
+            <!-- AI Response (only one instance) -->
+            <h2>AI Response:</h2>
+            <p id="chatbotResponse"></p>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 SimpleSaral - All Rights Reserved</p>
+    </footer>
+
+    <script src="{% static 'js/dashboard.js' %}"></script>
 </body>
+
 </html>
